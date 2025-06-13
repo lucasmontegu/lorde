@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@livekit/components-react": "^2.9.9",
+		"@livekit/components-styles": "^1.1.6",
 		"@orpc/client": "^1.4.1",
 		"@orpc/server": "^1.4.1",
 		"@orpc/tanstack-query": "^1.4.1",
