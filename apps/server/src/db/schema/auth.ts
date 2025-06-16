@@ -8,14 +8,14 @@ export const user = sqliteTable("user", {
 		.$defaultFn(() => false)
 		.notNull(),
 	image: text("image"),
-	role: text("role").default("member").notNull(), // 'admin', 'manager', 'member'
 	createdAt: integer("created_at", { mode: "timestamp" })
-		.$defaultFn(() => new Date())
+		.$defaultFn(() => /* @__PURE__ */ new Date())
 		.notNull(),
 	updatedAt: integer("updated_at", { mode: "timestamp" })
-		.$defaultFn(() => new Date())
+		.$defaultFn(() => /* @__PURE__ */ new Date())
 		.notNull(),
-	banned: integer("banned", { mode: "boolean" }).default(false),
+	role: text("role"),
+	banned: integer("banned", { mode: "boolean" }),
 	banReason: text("ban_reason"),
 	banExpires: integer("ban_expires", { mode: "timestamp" }),
 });
@@ -75,12 +75,8 @@ export const organization = sqliteTable("organization", {
 	name: text("name").notNull(),
 	slug: text("slug").unique(),
 	logo: text("logo"),
-	industry: text("industry"), // 'tech', 'finance', 'healthcare', etc.
-	size: text("size"), // 'startup', 'small', 'medium', 'enterprise'
-	plan: text("plan").default("basic").notNull(), // 'basic', 'pro', 'enterprise'
-	settings: text("settings"), // JSON: agent limits, features, etc.
 	createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-	metadata: text("metadata"), // JSON: billing, contacts, etc.
+	metadata: text("metadata"),
 });
 
 export const member = sqliteTable("member", {
@@ -91,10 +87,7 @@ export const member = sqliteTable("member", {
 	userId: text("user_id")
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
-	role: text("role").default("member").notNull(), // 'owner', 'admin', 'manager', 'member'
-	department: text("department"), // 'engineering', 'sales', 'marketing', etc.
-	position: text("position"), // 'developer', 'pm', 'designer', etc.
-	permissions: text("permissions"), // JSON: specific agent permissions
+	role: text("role").default("member").notNull(),
 	createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
 });
 
